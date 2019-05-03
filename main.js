@@ -44,9 +44,7 @@ class Cube {
 
     add(x, y, z) {
         for (let v = 0; v < this.vertices.length; v++) {
-            this.vertices[v].x += x;
-            this.vertices[v].y += y;
-            this.vertices[v].z += z;
+            this.vertices[v].add(x, y, z);
         }
     }
 
