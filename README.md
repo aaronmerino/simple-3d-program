@@ -1,5 +1,5 @@
 # simple 3D render
 
-WASD - movement
-mouse - aim
+# WASD - movement
+# mouse - aim
 
