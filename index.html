@@ -23,7 +23,6 @@
 
                 for (let v = 0; v < cube.vertices.length; v++) {
                     context.fillStyle = "green";
-                    context.shadowColor = "green";
                     context.beginPath();
                     context.arc(390, 390, 2, 0, 2*Math.PI);
                     let xprime = (cube.vertices[v].x / cube.vertices[v].z) ;
@@ -48,9 +47,10 @@
                             2, 0, 2*Math.PI);
 
 
-                            context.fill();
+                            
                         }
                     }
+                    context.fill();
             
                 }
                 
