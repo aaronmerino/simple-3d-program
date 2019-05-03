@@ -25,10 +25,10 @@
                     context.fillStyle = "green";
                     context.shadowColor = "green";
                     context.beginPath();
-                    context.arc(400, 400, 2, 0, 2*Math.PI);
+                    context.arc(390, 390, 2, 0, 2*Math.PI);
                     let xprime = (cube.vertices[v].x / cube.vertices[v].z) ;
                     let yprime = (cube.vertices[v].y / cube.vertices[v].z) ;
-                    console.log(cube.vertices[v].z);
+                    //console.log(cube.vertices[v].z);
                     if (cube.vertices[v].z > 1) {
 
                     
@@ -84,9 +84,11 @@
             }
             
             
-            let p1x = new Point(0, 0, 1);
-            let p1y = new Point(0, 0, 1);
-            let zaxis = new Point(0, 0, 1);
+            var p1x = new Point(0, 0, 1);
+            var p1y = new Point(0, 0, 1);
+            var zaxis = new Point(0, 0, 1);
+            var anglex = 0;
+            var angley = 0;
             canvas.addEventListener('mousemove', (event) => {
                 // if (!newpt) {
                 //     p1.x = event.pageX;
@@ -95,36 +97,44 @@
                     p1x.x = (event.pageX - 400) / 800;
                     p1y.y = (event.pageY - 400) / 800;
                     
-                    var anglex = Math.acos(p1x.dot(zaxis) / (p1x.norm2() * zaxis.norm2()));
-                    var angley = Math.acos(p1y.dot(zaxis) / (p1y.norm2() * zaxis.norm2()));
+                    anglex = Math.acos(p1x.dot(zaxis) / (p1x.norm2() * zaxis.norm2()));
+                    angley = Math.acos(p1y.dot(zaxis) / (p1y.norm2() * zaxis.norm2()));
                     if (anglex * 180 / Math.PI >= 2) {
-                        anglex = 2 * Math.PI/180;
+                        anglex = 1 * Math.PI/180;
                     }
 
                     if (angley * 180 / Math.PI >= 2) {
-                        angley = 2 * Math.PI/180;
+                        angley = 1 * Math.PI/180;
                     }
                     // console.log(p1x.x);
                     // console.log(p1y.y);
                     // cube.rotateY(anglex/20);
                     // cube.rotateX(angley/20);
+
                     if (p1y.y < 0) {
                         console.log(-angley * 180 / Math.PI);
-                        cube.rotateX(-angley/2);
+                        angley = -angley/5;
+                        // cube.rotateX(-angley/2);
                     } else {
-                        console.log(angley * 180 / Math.PI);
-                        cube.rotateX(angley/2);
+                        angley = angley/5;
                     }
+                    // } else {
+                    //     console.log(angley * 180 / Math.PI);
+                    //     cube.rotateX(angley/2);
+                    // }
 
                     if (p1x.x < 0) {
                         console.log(-anglex * 180 / Math.PI);
-                        cube.rotateY(-anglex/2);
+                        //cube.rotateY(-anglex/2);
+                        anglex = -anglex/5;
                     } else {
-                        console.log(anglex * 180 / Math.PI);
-                        cube.rotateY(anglex/2);
+                        anglex = anglex/5;
                     }
-
-                    //zaxis = new Point(p1x.x, p1y.y, 1);
+                    // } else {
+                    //     console.log(anglex * 180 / Math.PI);
+                    //     cube.rotateY(anglex/2);
+                    // }
+                    //zaxis = new Point(p1x.x/2 + 200, p1y.y/2 + 200, 10);
                     //updateCanv(document.getElementById("canvas").getContext("2d"));
                     
                 // }
@@ -139,30 +149,44 @@
 
                 cube = new Cube();
                 let rot = 0;
-                updateCanv();
+
+                var keydown = false;
+                var key = 0;
                 setInterval(() => {
                     updateCanv();
                     //cube.rotateAxis(new Point(0, 1, 0), rot);
                     //rot = -0.01;
+                    cube.rotateX(angley);
+                    cube.rotateY(anglex);
+
+                    if (keydown) {
+                        if (key == "a") {
+                            cube.add(-0.05, 0 , 0);
+                        }
+
+                        if (key == "d") {
+                            cube.add(0.05, 0 , 0);
+                        }
+
+                        if (key == "w") {
+                            cube.add(0, 0 , -0.05);
+                        }
+
+                        if (key == "s") {
+                            cube.add(0, 0 , 0.05);
+                        }
+                    }
                 }, 10);
 
                 document.addEventListener('keydown', function(event) {
                     console.log(event);
-                    if (event.key == "a") {
-                        cube.add(-0.05, 0 , 0);
-                    }
+                    keydown = true;
+                    key = event.key;
+                }, false);
 
-                    if (event.key == "d") {
-                        cube.add(0.05, 0 , 0);
-                    }
-
-                    if (event.key == "w") {
-                        cube.add(0, 0 , -0.05);
-                    }
-
-                    if (event.key == "s") {
-                        cube.add(0, 0 , 0.05);
-                    }
+                document.addEventListener('keyup', function(event) {
+                    console.log(event);
+                    keydown = false;
                 }, false);
 
             });
