@@ -28,7 +28,8 @@
                     context.arc(400, 400, 2, 0, 2*Math.PI);
                     let xprime = (cube.vertices[v].x / cube.vertices[v].z) ;
                     let yprime = (cube.vertices[v].y / cube.vertices[v].z) ;
-                    // if (cube.vertiecs[v].z > 1) {
+                    console.log(cube.vertices[v].z);
+                    if (cube.vertices[v].z > 1) {
 
                     
                         if (xprime >= xmin && xprime <= xmax && yprime >= ymin && yprime <= ymax) {
@@ -49,7 +50,7 @@
 
                             context.fill();
                         }
-                    // }
+                    }
             
                 }
                 
@@ -61,7 +62,7 @@
                     let yprimeb1 = (cube.vertices[b1].y / cube.vertices[b1].z) ;
                     let xprimeb2 = (cube.vertices[b2].x / cube.vertices[b2].z) ;
                     let yprimeb2 = (cube.vertices[b2].y / cube.vertices[b2].z) ;
-                    // if (cube.vertiecs[b1].z > 1 && cube.vertiecs[b2].z > 1) {
+                    if (cube.vertices[b1].z > 1 && cube.vertices[b2].z > 1) {
                         if (xprimeb1 >= xmin && xprimeb1 <= xmax && yprimeb1 >= ymin && yprimeb1 <= ymax) {
                             if (xprimeb2 >= xmin && xprimeb2 <= xmax && yprimeb2 >= ymin && yprimeb2 <= ymax) {
                                 context.beginPath();
@@ -76,7 +77,7 @@
                                 context.stroke();
                             }
                         }
-                    // }
+                    }
                 }
 
 				
@@ -91,8 +92,8 @@
                 //     p1.x = event.pageX;
                 //     p1.y = event.pageY;
                 // } else {
-                    p1x.x = (event.pageX - 400 - zaxis.x) / 800;
-                    p1y.y = (event.pageY - 400 - zaxis.y) / 800;
+                    p1x.x = (event.pageX - 400) / 800;
+                    p1y.y = (event.pageY - 400) / 800;
                     
                     var anglex = Math.acos(p1x.dot(zaxis) / (p1x.norm2() * zaxis.norm2()));
                     var angley = Math.acos(p1y.dot(zaxis) / (p1y.norm2() * zaxis.norm2()));
@@ -103,8 +104,8 @@
                     if (angley * 180 / Math.PI >= 2) {
                         angley = 2 * Math.PI/180;
                     }
-                    console.log(p1x.x);
-                    console.log(p1y.y);
+                    // console.log(p1x.x);
+                    // console.log(p1y.y);
                     // cube.rotateY(anglex/20);
                     // cube.rotateX(angley/20);
                     if (p1y.y < 0) {
@@ -123,17 +124,9 @@
                         cube.rotateY(anglex/2);
                     }
 
-                    // if (p1x.x < 0) {
-                    //     console.log(-angley * 180 / Math.PI);
-                    //     cube.rotateX(-angley/20);
-                    // } else {
-                    //     console.log(angley * 180 / Math.PI);
-                    //     cube.rotateX(angley/20);
-                    // }
-
-                    zxais = new Point(p1x.x, p1y.y, 1);
+                    //zaxis = new Point(p1x.x, p1y.y, 1);
                     //updateCanv(document.getElementById("canvas").getContext("2d"));
-                    console.log("test");
+                    
                 // }
 
                 // newpt = !newpt;
@@ -156,19 +149,19 @@
                 document.addEventListener('keydown', function(event) {
                     console.log(event);
                     if (event.key == "a") {
-                        cube.add(-0.05, 0 ,0);
+                        cube.add(-0.05, 0 , 0);
                     }
 
                     if (event.key == "d") {
-                        cube.add(0.05, 0 ,0);
+                        cube.add(0.05, 0 , 0);
                     }
 
                     if (event.key == "w") {
-                        cube.add(0, 0 ,-0.05);
+                        cube.add(0, 0 , -0.05);
                     }
 
                     if (event.key == "s") {
-                        cube.add(0, 0 ,0.05);
+                        cube.add(0, 0 , 0.05);
                     }
                 }, false);
 
