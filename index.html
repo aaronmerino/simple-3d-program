@@ -1,201 +1,203 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8"></meta>
-        <title> simple 3D </title>
-        <script type="text/javascript" src="main.js"></script>
-        <script type="text/javascript">
-            var cube;
-            var xmax = 1;
-            var ymax = 1;
-            var xmin = -1;
-            var ymin = -1;
-            var canvas = document.createElement("canvas");
-            var context = canvas.getContext("2d");
 
-            canvas.style.width = 800 + 'px';
-	        canvas.style.height = 800 + 'px';
-	        canvas.width = 800;
-            canvas.height = 800;
-            canvas.style = "border:1px solid #000000";
+<head>
+    <meta charset="UTF-8">
+    </meta>
+    <title> simple 3D </title>
+    <script type="text/javascript" src="main.js"></script>
+    <script type="text/javascript">
+        var cube;
+        var xmax = 1;
+        var ymax = 1;
+        var xmin = -1;
+        var ymin = -1;
+        var canvas = document.createElement("canvas");
+        var context = canvas.getContext("2d");
 
-			function updateCanv() {
-                context.clearRect(0, 0, 800, 800);
-                
-                context.fillStyle = "black";
-                context.fillRect(0 , 0,
-                    canvas.width, canvas.height);
+        canvas.style.width = 800 + 'px';
+        canvas.style.height = 800 + 'px';
+        canvas.width = 800;
+        canvas.height = 800;
+        canvas.style = "border:1px solid #000000";
+
+        function updateCanv() {
+            context.clearRect(0, 0, 800, 800);
+
+            context.fillStyle = "black";
+            context.fillRect(0, 0,
+                canvas.width, canvas.height);
+            context.fill();
+
+            for (let v = 0; v < cube.vertices.length; v++) {
+                context.fillStyle = "red";
+                context.beginPath();
+                context.arc(390, 390, 2, 0, 2 * Math.PI);
+                let xprime = (cube.vertices[v].x / cube.vertices[v].z);
+                let yprime = (cube.vertices[v].y / cube.vertices[v].z);
+                //console.log(cube.vertices[v].z);
+                if (cube.vertices[v].z > 1) {
+
+
+                    if (xprime >= xmin && xprime <= xmax && yprime >= ymin && yprime <= ymax) {
+                        // console.log("v:" + v)
+                        // console.log(cube.vertices[v].x)
+                        // console.log(cube.vertices[v].z)
+                        // console.log(xprime)
+                        // console.log(yprime)
+                        //context.arc(xprime, yprime, 4, 0, 2*Math.PI);
+                        context.arc(
+                            (800 * ((1 - (xprime - xmin) / (xmax - xmin)))),
+
+                            (800 * ((yprime - ymin) / (ymax - ymin))),
+
+
+                            2, 0, 2 * Math.PI);
+
+
+
+                    }
+                }
                 context.fill();
 
-                for (let v = 0; v < cube.vertices.length; v++) {
-                    context.fillStyle = "red";
-                    context.beginPath();
-                    context.arc(390, 390, 2, 0, 2*Math.PI);
-                    let xprime = (cube.vertices[v].x / cube.vertices[v].z) ;
-                    let yprime = (cube.vertices[v].y / cube.vertices[v].z) ;
-                    //console.log(cube.vertices[v].z);
-                    if (cube.vertices[v].z > 1) {
-
-                    
-                        if (xprime >= xmin && xprime <= xmax && yprime >= ymin && yprime <= ymax) {
-                            // console.log("v:" + v)
-                            // console.log(cube.vertices[v].x)
-                            // console.log(cube.vertices[v].z)
-                            // console.log(xprime)
-                            // console.log(yprime)
-                            //context.arc(xprime, yprime, 4, 0, 2*Math.PI);
-                            context.arc(
-                                        (800 * ( (1 - (xprime - xmin) / (xmax - xmin)))) , 
-                            
-                                        (800 *   ((yprime - ymin) / (ymax - ymin))), 
-                            
-                            
-                            2, 0, 2*Math.PI);
-
-
-                            
-                        }
-                    }
-                    context.fill();
-            
-                }
-                
-                for (let e = 0; e < cube.edges.length; e++) {
-                    let b1 = cube.edges[e][0];
-                    let b2 = cube.edges[e][1];
-
-                    let xprimeb1 = (cube.vertices[b1].x / cube.vertices[b1].z) ;
-                    let yprimeb1 = (cube.vertices[b1].y / cube.vertices[b1].z) ;
-                    let xprimeb2 = (cube.vertices[b2].x / cube.vertices[b2].z) ;
-                    let yprimeb2 = (cube.vertices[b2].y / cube.vertices[b2].z) ;
-                    if (cube.vertices[b1].z > 1 && cube.vertices[b2].z > 1) {
-                        if (xprimeb1 >= xmin && xprimeb1 <= xmax && yprimeb1 >= ymin && yprimeb1 <= ymax) {
-                            if (xprimeb2 >= xmin && xprimeb2 <= xmax && yprimeb2 >= ymin && yprimeb2 <= ymax) {
-                                context.beginPath();
-                                context.lineWidth = 1;
-                                context.strokeStyle = "#CC00CC";
-                                context.shadowBlur = 0;
-                                //this.context.shadowColor = "#003E3E";
-                                context.moveTo((800 * ( (1 - (xprimeb1 - xmin) / (xmax - xmin)))) , (800 *   ((yprimeb1 - ymin) / (ymax - ymin))));
-                                    
-                                context.lineTo((800 * ( (1 - (xprimeb2 - xmin) / (xmax - xmin)))) , (800 *   ((yprimeb2 - ymin) / (ymax - ymin))));
-
-                                context.stroke();
-                            }
-                        }
-                    }
-                }
-
-				
             }
-            
-            
-            var p1x = new Point(0, 0, 1);
-            var p1y = new Point(0, 0, 1);
-            var zaxis = new Point(0, 0, 1);
-            var anglex = 0;
-            var angley = 0;
-            canvas.addEventListener('mousemove', (event) => {
-               
-                p1x.x = (event.pageX - 400) / 800;
-                p1y.y = (event.pageY - 400) / 800;
-                
-                anglex = Math.acos(p1x.dot(zaxis) / (p1x.norm2() * zaxis.norm2()));
-                angley = Math.acos(p1y.dot(zaxis) / (p1y.norm2() * zaxis.norm2()));
-                console.log(p1x.x)
-                
-                anglex = anglex * Math.sqrt( p1x.x * p1x.x + p1y.y * p1y.y);
-                angley = angley * Math.sqrt( p1x.x * p1x.x + p1y.y * p1y.y);
-                
-                
-                if (Math.sqrt( p1x.x * p1x.x + p1y.y * p1y.y) >= 0.3 ) {
-                    anglex = anglex * 0.3
-                    angley = angley * 0.3
-                }
 
+            for (let e = 0; e < cube.edges.length; e++) {
+                let b1 = cube.edges[e][0];
+                let b2 = cube.edges[e][1];
 
-                if (p1y.y < 0) {
-                    console.log(-angley * 180 / Math.PI);
-                    angley = -angley/5;
-                    // cube.rotateX(-angley/2);
-                } else {
-                    angley = angley/5;
-                }
+                let xprimeb1 = (cube.vertices[b1].x / cube.vertices[b1].z);
+                let yprimeb1 = (cube.vertices[b1].y / cube.vertices[b1].z);
+                let xprimeb2 = (cube.vertices[b2].x / cube.vertices[b2].z);
+                let yprimeb2 = (cube.vertices[b2].y / cube.vertices[b2].z);
+                if (cube.vertices[b1].z > 1 && cube.vertices[b2].z > 1) {
+                    if (xprimeb1 >= xmin && xprimeb1 <= xmax && yprimeb1 >= ymin && yprimeb1 <= ymax) {
+                        if (xprimeb2 >= xmin && xprimeb2 <= xmax && yprimeb2 >= ymin && yprimeb2 <= ymax) {
+                            context.beginPath();
+                            context.lineWidth = 1;
+                            context.strokeStyle = "#CC00CC";
+                            context.shadowBlur = 0;
+                            //this.context.shadowColor = "#003E3E";
+                            context.moveTo((800 * ((1 - (xprimeb1 - xmin) / (xmax - xmin)))), (800 * ((yprimeb1 - ymin) / (ymax - ymin))));
 
+                            context.lineTo((800 * ((1 - (xprimeb2 - xmin) / (xmax - xmin)))), (800 * ((yprimeb2 - ymin) / (ymax - ymin))));
 
-                if (p1x.x < 0) {
-                    console.log(-anglex * 180 / Math.PI);
-                    //cube.rotateY(-anglex/2);
-                    anglex = -anglex/5;
-                } else {
-                    anglex = anglex/5;
-                }
-
-                //updateCanv(document.getElementById("canvas").getContext("2d"));
-                
-          
-            });
-            
-
-            window.addEventListener("load", function (event) {
-                var container = document.getElementById("container");
-                container.insertBefore(canvas, container.childNodes[0]);
-
-                cube = new Cube();
-                let rot = 0;
-
-                var keydown = false;
-                var key = 0;
-                setInterval(() => {
-                    updateCanv();
-                    //cube.rotateAxis(new Point(0, 1, 0), rot);
-                    //rot = -0.01;
-                    cube.rotateX(angley);
-                    cube.rotateY(anglex);
-
-                    if (keydown) {
-                        if (key == "a") {
-                            cube.add(-0.05, 0 , 0);
-                        }
-
-                        if (key == "d") {
-                            cube.add(0.05, 0 , 0);
-                        }
-
-                        if (key == "w") {
-                            cube.add(0, 0 , -0.05);
-                        }
-
-                        if (key == "s") {
-                            cube.add(0, 0 , 0.05);
-                        }
-
-                        if (key == "x") {
-                            cube.add(0, 0.05 , 0);
-                        }
-
-                        if (key == "z") {
-                            cube.add(0, -0.05 , 0);
+                            context.stroke();
                         }
                     }
-                }, 10);
+                }
+            }
 
-                document.addEventListener('keydown', function(event) {
-                    console.log(event);
-                    keydown = true;
-                    key = event.key;
-                }, false);
 
-                document.addEventListener('keyup', function(event) {
-                    console.log(event);
-                    keydown = false;
-                }, false);
+        }
 
-            });
-		</script>
-	</head>
 
-	<body>
+        var p1x = new Point(0, 0, 1);
+        var p1y = new Point(0, 0, 1);
+        var zaxis = new Point(0, 0, 1);
+        var anglex = 0;
+        var angley = 0;
+        canvas.addEventListener('mousemove', (event) => {
+
+            p1x.x = (event.pageX - 400) / 800;
+            p1y.y = (event.pageY - 400) / 800;
+
+            anglex = Math.acos(p1x.dot(zaxis) / (p1x.norm2() * zaxis.norm2()));
+            angley = Math.acos(p1y.dot(zaxis) / (p1y.norm2() * zaxis.norm2()));
+            console.log(p1x.x)
+
+            anglex = anglex * Math.sqrt(p1x.x * p1x.x + p1y.y * p1y.y);
+            angley = angley * Math.sqrt(p1x.x * p1x.x + p1y.y * p1y.y);
+
+
+            if (Math.sqrt(p1x.x * p1x.x + p1y.y * p1y.y) >= 0.3) {
+                anglex = anglex * 0.3
+                angley = angley * 0.3
+            }
+
+
+            if (p1y.y < 0) {
+                console.log(-angley * 180 / Math.PI);
+                angley = -angley / 5;
+                // cube.rotateX(-angley/2);
+            } else {
+                angley = angley / 5;
+            }
+
+
+            if (p1x.x < 0) {
+                console.log(-anglex * 180 / Math.PI);
+                //cube.rotateY(-anglex/2);
+                anglex = -anglex / 5;
+            } else {
+                anglex = anglex / 5;
+            }
+
+            //updateCanv(document.getElementById("canvas").getContext("2d"));
+
+
+        });
+
+
+        window.addEventListener("load", function (event) {
+            var container = document.getElementById("container");
+            container.insertBefore(canvas, container.childNodes[0]);
+
+            cube = new Cube();
+            let rot = 0;
+
+            var keydown = false;
+            var key = 0;
+            setInterval(() => {
+                updateCanv();
+                //cube.rotateAxis(new Point(0, 1, 0), rot);
+                //rot = -0.01;
+                cube.rotateX(angley);
+                cube.rotateY(anglex);
+
+                if (keydown) {
+                    if (key == "a") {
+                        cube.add(-0.05, 0, 0);
+                    }
+
+                    if (key == "d") {
+                        cube.add(0.05, 0, 0);
+                    }
+
+                    if (key == "w") {
+                        cube.add(0, 0, -0.05);
+                    }
+
+                    if (key == "s") {
+                        cube.add(0, 0, 0.05);
+                    }
+
+                    if (key == "x") {
+                        cube.add(0, 0.05, 0);
+                    }
+
+                    if (key == "z") {
+                        cube.add(0, -0.05, 0);
+                    }
+                }
+            }, 10);
+
+            document.addEventListener('keydown', function (event) {
+                console.log(event);
+                keydown = true;
+                key = event.key;
+            }, false);
+
+            document.addEventListener('keyup', function (event) {
+                console.log(event);
+                keydown = false;
+            }, false);
+
+        });
+    </script>
+</head>
+
+<body>
     <table>
         <tbody>
             <tr>
@@ -204,7 +206,8 @@
                     <!-- <canvas id="canvas" width="800" height="800"></canvas> -->
                 </td>
             </tr>
-        </tbody>    
+        </tbody>
     </table>
-    </body>
+</body>
+
 </html>
