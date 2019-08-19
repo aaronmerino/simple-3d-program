@@ -25,21 +25,23 @@ class Cube {
     constructor() {
 
         this.vertices = [];
+
+        this.vertices[0] = (new Point(0.5 , -0.5, 10));
         this.vertices[1] = (new Point(-0.5 , -0.5, 10));
-        this.vertices[0] = (new Point(-0.5 , 0.5, 10));
-        this.vertices[3] = (new Point(0.5 , 0.5, 10));
-        this.vertices[2] = (new Point(0.5 , -0.5, 10));
+        this.vertices[2] = (new Point(0.5 , 0.5, 10));
+        this.vertices[3] = (new Point(-0.5 , 0.5, 10));
         
-        this.vertices[7] = (new Point(-0.5, -0.5, 4.5));
-        this.vertices[6] = (new Point(-0.5, 0.5, 4.5));
-        this.vertices[5] = (new Point(0.5, 0.5, 4.5));
-        this.vertices[4] = (new Point(0.5, -0.5, 4.5));
+        this.vertices[4] = (new Point(0.5, -0.5, 9));
+        this.vertices[5] = (new Point(-0.5, -0.5, 9));
+        this.vertices[6] = (new Point(0.5, 0.5, 9));
+        this.vertices[7] = (new Point(-0.5, 0.5, 9));
 
         for (let v = 0; v < this.vertices.length; v++){
             this.vertices[v].add(0, 0, 1 );
         }
 
-        this.edges = [[0, 1], [1,2], [2,3], [3,0], [0,4], [1,5], [2,6], [3,7], [4,5], [5,6], [6,7], [7,4]];
+
+        this.edges = [[0, 1], [0, 2], [2, 3], [1, 3], [4,5], [4, 6], [6,7], [5, 7], [0,4], [1,5], [2,6], [3, 7]];
     }
 
     add(x, y, z) {

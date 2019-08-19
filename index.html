@@ -96,56 +96,44 @@
             var anglex = 0;
             var angley = 0;
             canvas.addEventListener('mousemove', (event) => {
-                // if (!newpt) {
-                //     p1.x = event.pageX;
-                //     p1.y = event.pageY;
-                // } else {
-                    p1x.x = (event.pageX - 400) / 800;
-                    p1y.y = (event.pageY - 400) / 800;
-                    
-                    anglex = Math.acos(p1x.dot(zaxis) / (p1x.norm2() * zaxis.norm2()));
-                    angley = Math.acos(p1y.dot(zaxis) / (p1y.norm2() * zaxis.norm2()));
-                    if (anglex * 180 / Math.PI >= 2) {
-                        anglex = 2 * Math.PI/180;
-                    }
+               
+                p1x.x = (event.pageX - 400) / 800;
+                p1y.y = (event.pageY - 400) / 800;
+                
+                anglex = Math.acos(p1x.dot(zaxis) / (p1x.norm2() * zaxis.norm2()));
+                angley = Math.acos(p1y.dot(zaxis) / (p1y.norm2() * zaxis.norm2()));
+                console.log(p1x.x)
+                
+                anglex = anglex * Math.sqrt( p1x.x * p1x.x + p1y.y * p1y.y);
+                angley = angley * Math.sqrt( p1x.x * p1x.x + p1y.y * p1y.y);
+                
+                
+                if (Math.sqrt( p1x.x * p1x.x + p1y.y * p1y.y) >= 0.3 ) {
+                    anglex = anglex * 0.3
+                    angley = angley * 0.3
+                }
 
-                    if (angley * 180 / Math.PI >= 2) {
-                        angley = 2 * Math.PI/180;
-                    }
-                    // console.log(p1x.x);
-                    // console.log(p1y.y);
-                    // cube.rotateY(anglex/20);
-                    // cube.rotateX(angley/20);
 
-                    if (p1y.y < 0) {
-                        console.log(-angley * 180 / Math.PI);
-                        angley = -angley/5;
-                        // cube.rotateX(-angley/2);
-                    } else {
-                        angley = angley/5;
-                    }
-                    // } else {
-                    //     console.log(angley * 180 / Math.PI);
-                    //     cube.rotateX(angley/2);
-                    // }
+                if (p1y.y < 0) {
+                    console.log(-angley * 180 / Math.PI);
+                    angley = -angley/5;
+                    // cube.rotateX(-angley/2);
+                } else {
+                    angley = angley/5;
+                }
 
-                    if (p1x.x < 0) {
-                        console.log(-anglex * 180 / Math.PI);
-                        //cube.rotateY(-anglex/2);
-                        anglex = -anglex/5;
-                    } else {
-                        anglex = anglex/5;
-                    }
-                    // } else {
-                    //     console.log(anglex * 180 / Math.PI);
-                    //     cube.rotateY(anglex/2);
-                    // }
-                    //zaxis = new Point(p1x.x/2 + 200, p1y.y/2 + 200, 10);
-                    //updateCanv(document.getElementById("canvas").getContext("2d"));
-                    
-                // }
 
-                // newpt = !newpt;
+                if (p1x.x < 0) {
+                    console.log(-anglex * 180 / Math.PI);
+                    //cube.rotateY(-anglex/2);
+                    anglex = -anglex/5;
+                } else {
+                    anglex = anglex/5;
+                }
+
+                //updateCanv(document.getElementById("canvas").getContext("2d"));
+                
+          
             });
             
 
