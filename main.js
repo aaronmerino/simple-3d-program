@@ -26,15 +26,15 @@ class Cube {
 
         this.vertices = [];
 
-        this.vertices[0] = (new Point(0.5 , -0.5, 10));
-        this.vertices[1] = (new Point(-0.5 , -0.5, 10));
-        this.vertices[2] = (new Point(0.5 , 0.5, 10));
-        this.vertices[3] = (new Point(-0.5 , 0.5, 10));
+        this.vertices[0] = (new Point(0.5 , -0.5, 5));
+        this.vertices[1] = (new Point(-0.5 , -0.5, 5));
+        this.vertices[2] = (new Point(0.5 , 0.5, 5));
+        this.vertices[3] = (new Point(-0.5 , 0.5, 5));
         
-        this.vertices[4] = (new Point(0.5, -0.5, 9));
-        this.vertices[5] = (new Point(-0.5, -0.5, 9));
-        this.vertices[6] = (new Point(0.5, 0.5, 9));
-        this.vertices[7] = (new Point(-0.5, 0.5, 9));
+        this.vertices[4] = (new Point(0.5, -0.5, 4));
+        this.vertices[5] = (new Point(-0.5, -0.5, 4));
+        this.vertices[6] = (new Point(0.5, 0.5, 4));
+        this.vertices[7] = (new Point(-0.5, 0.5, 4));
 
         for (let v = 0; v < this.vertices.length; v++){
             this.vertices[v].add(0, 0, 1 );

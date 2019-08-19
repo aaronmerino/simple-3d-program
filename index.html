@@ -32,13 +32,13 @@
             for (let v = 0; v < cube.vertices.length; v++) {
                 context.fillStyle = "red";
                 context.beginPath();
-                context.arc(390, 390, 2, 0, 2 * Math.PI);
+                context.rect(400 - 5, 400 - 0.25, 10, 0.5);
+                context.rect(400 - 0.25, 400 - 5, 0.5, 10);
+                //context.arc(400, 400, 1, 0, 2 * Math.PI);
                 let xprime = (cube.vertices[v].x / cube.vertices[v].z);
                 let yprime = (cube.vertices[v].y / cube.vertices[v].z);
                 //console.log(cube.vertices[v].z);
                 if (cube.vertices[v].z > 1) {
-
-
                     if (xprime >= xmin && xprime <= xmax && yprime >= ymin && yprime <= ymax) {
                         // console.log("v:" + v)
                         // console.log(cube.vertices[v].x)
@@ -97,44 +97,58 @@
         var zaxis = new Point(0, 0, 1);
         var anglex = 0;
         var angley = 0;
+
+        var mouseLeftDown = false
+        canvas.addEventListener('mousedown', (event) => {
+            if (event.button === 0) {
+                mouseLeftDown = true;
+            }
+        });
+
+        canvas.addEventListener('mouseup', (event) => {
+            if (event.button === 0) {
+                mouseLeftDown = false;
+                anglex = 0;
+                angley = 0;
+            }
+        });
+
         canvas.addEventListener('mousemove', (event) => {
 
             p1x.x = (event.pageX - 400) / 800;
             p1y.y = (event.pageY - 400) / 800;
 
-            anglex = Math.acos(p1x.dot(zaxis) / (p1x.norm2() * zaxis.norm2()));
-            angley = Math.acos(p1y.dot(zaxis) / (p1y.norm2() * zaxis.norm2()));
-            console.log(p1x.x)
+            anglex = Math.acos(p1x.dot(zaxis) / (p1x.norm2() * zaxis.norm2())) / 5;
+            angley = Math.acos(p1y.dot(zaxis) / (p1y.norm2() * zaxis.norm2())) / 5;
 
-            anglex = anglex * Math.sqrt(p1x.x * p1x.x + p1y.y * p1y.y);
-            angley = angley * Math.sqrt(p1x.x * p1x.x + p1y.y * p1y.y);
-
-
-            if (Math.sqrt(p1x.x * p1x.x + p1y.y * p1y.y) >= 0.3) {
-                anglex = anglex * 0.3
-                angley = angley * 0.3
-            }
-
-
-            if (p1y.y < 0) {
-                console.log(-angley * 180 / Math.PI);
-                angley = -angley / 5;
-                // cube.rotateX(-angley/2);
+            if (Math.sqrt(p1x.x * p1x.x + p1y.y * p1y.y) <= 0.2) {
+                anglex = anglex * Math.sqrt(p1x.x * p1x.x + p1y.y * p1y.y);
+                angley = angley * Math.sqrt(p1x.x * p1x.x + p1y.y * p1y.y);
             } else {
-                angley = angley / 5;
+                anglex = anglex * 0.2
+                angley = angley * 0.2
             }
 
+            if (mouseLeftDown) {
 
-            if (p1x.x < 0) {
-                console.log(-anglex * 180 / Math.PI);
-                //cube.rotateY(-anglex/2);
-                anglex = -anglex / 5;
+                if (p1y.y < 0) {
+                    angley = -angley;
+                } else {
+                    angley = angley;
+                }
+
+
+                if (p1x.x < 0) {
+                    anglex = -anglex;
+                } else {
+                    anglex = anglex;
+                }
+
+                //updateCanv(document.getElementById("canvas").getContext("2d"));
             } else {
-                anglex = anglex / 5;
+                anglex = 0;
+                angley = 0;
             }
-
-            //updateCanv(document.getElementById("canvas").getContext("2d"));
-
 
         });
 
