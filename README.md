@@ -1,7 +1,9 @@
-# simple 3D render
+# simple 3D program
 
-# WASD - movement
-# x - UP
+understanding perspective (1pp, 2pp, 3pp)
+
+# WASD - FORWARDS,LEFT,BACKWARDS,RIGHT
+# X - UP
 # Z - DOWN
 # mouse - aim
 
