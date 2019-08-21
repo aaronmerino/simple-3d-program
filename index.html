@@ -92,9 +92,9 @@
         }
 
 
-        var p1x = new Point(0, 0, 1);
-        var p1y = new Point(0, 0, 1);
-        var zaxis = new Point(0, 0, 1);
+        var p1x = new Vec3(0, 0, 1);
+        var p1y = new Vec3(0, 0, 1);
+        var zaxis = new Vec3(0, 0, 1);
         var anglex = 0;
         var angley = 0;
 
@@ -158,53 +158,65 @@
             container.insertBefore(canvas, container.childNodes[0]);
 
             cube = new Cube();
-            let rot = 0;
+            var moveVec = new Vec3(0, 0, 0);
+            var rotateAxis = new Vec3(0, 0, 0);
+            var map = [];
 
-            var keydown = false;
-            var key = 0;
             setInterval(() => {
                 updateCanv();
-                //cube.rotateAxis(new Point(0, 1, 0), rot);
-                //rot = -0.01;
                 cube.rotateX(angley);
                 cube.rotateY(anglex);
 
-                if (keydown) {
-                    if (key == "a") {
-                        cube.add(-0.05, 0, 0);
-                    }
-
-                    if (key == "d") {
-                        cube.add(0.05, 0, 0);
-                    }
-
-                    if (key == "w") {
-                        cube.add(0, 0, -0.05);
-                    }
-
-                    if (key == "s") {
-                        cube.add(0, 0, 0.05);
-                    }
-
-                    if (key == "x") {
-                        cube.add(0, 0.05, 0);
-                    }
-
-                    if (key == "z") {
-                        cube.add(0, -0.05, 0);
-                    }
+                
+                moveVec = new Vec3(0, 0, 0);
+                rotateAxis = new Vec3(0, 0, 0);
+                if (map[65]) { //A
+                    moveVec.add(new Vec3(-0.01, 0, 0));
                 }
-            }, 10);
+
+                if (map[68]) { //D
+                    moveVec.add(new Vec3(0.01, 0, 0));
+                }
+
+                if (map[87]) { // W
+                    moveVec.add(new Vec3(0, 0, -0.01));
+                }
+
+                if (map[83]) { //S
+                    moveVec.add(new Vec3(0, 0, 0.01));
+                }
+
+                if (map[88]) { //X
+                    moveVec.add(new Vec3(0, 0.01, 0));
+                }
+
+                if (map[90]) { //Z
+                    moveVec.add(new Vec3(0, -0.01, 0));
+                }
+
+                if (map[81]) { //Q
+                    rotateAxis = new Vec3(0, 0, 1);
+                    cube.rotateAxis(rotateAxis, 0.005);
+                }
+
+                if (map[69]) { //E
+                    rotateAxis = new Vec3(0, 0, 1);
+                    cube.rotateAxis(rotateAxis, -0.005);
+                }
+
+                cube.add(moveVec)
+                
+                
+            }, 15);
 
             document.addEventListener('keydown', function (event) {
-                console.log(event);
-                keydown = true;
-                key = event.key;
+                console.log('event_keydown:' + event.type);
+                map[event.keyCode] = event.type == 'keydown';
             }, false);
 
             document.addEventListener('keyup', function (event) {
-                console.log(event);
-                keydown = false;
+                console.log('event_keyup:' + event.type);
+                map[event.keyCode] = event.type == 'keydown';
             }, false);
 
         });
