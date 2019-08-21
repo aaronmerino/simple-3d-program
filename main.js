@@ -73,25 +73,37 @@ class Cube {
 
     rotateX(rad) {
         for (let v = 0; v < this.vertices.length; v++) {
-            this.vertices[v].x = this.vertices[v].x;
-            this.vertices[v].y =  Math.cos(rad) * this.vertices[v].y - Math.sin(rad) * this.vertices[v].z;
-            this.vertices[v].z = Math.sin(rad) * this.vertices[v].y + Math.cos(rad) * this.vertices[v].z;
+            let x = this.vertices[v].x;
+            let y = this.vertices[v].y;
+            let z = this.vertices[v].z;
+
+            this.vertices[v].x = x;
+            this.vertices[v].y =  Math.cos(rad) * y - Math.sin(rad) * z;
+            this.vertices[v].z = Math.sin(rad) * y + Math.cos(rad) * z;
         }
     }
 
     rotateY(rad) {
         for (let v = 0; v < this.vertices.length; v++) {
-            this.vertices[v].x = Math.cos(rad) * this.vertices[v].x + Math.sin(rad) * this.vertices[v].z;
-            this.vertices[v].y = this.vertices[v].y;
-            this.vertices[v].z = -Math.sin(rad) * this.vertices[v].x + Math.cos(rad) * this.vertices[v].z;
+            let x = this.vertices[v].x;
+            let y = this.vertices[v].y;
+            let z = this.vertices[v].z;
+
+            this.vertices[v].x = Math.cos(rad) * x + Math.sin(rad) * z;
+            this.vertices[v].y = y;
+            this.vertices[v].z = -Math.sin(rad) * x + Math.cos(rad) * z;
         }
     }
 
     rotateZ(rad) {
         for (let v = 0; v < this.vertices.length; v++) {
-            this.vertices[v].x = Math.cos(rad) * this.vertices[v].x - Math.sin(rad) * this.vertices[v].y;
-            this.vertices[v].y = Math.sin(rad) * this.vertices[v].x + Math.cos(rad) * this.vertices[v].y;
-            this.vertices[v].z = this.vertices[v].z;
+            let x = this.vertices[v].x;
+            let y = this.vertices[v].y;
+            let z = this.vertices[v].z;
+
+            this.vertices[v].x = Math.cos(rad) * x - Math.sin(rad) * y;
+            this.vertices[v].y = Math.sin(rad) * x + Math.cos(rad) * y;
+            this.vertices[v].z = z;
         }
     }
 }
